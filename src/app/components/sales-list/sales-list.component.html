@@ -1,0 +1,51 @@
+<div class="container bg-white ">
+  <div class="header">
+    <h1 class="text-gray-950 ">Informe de Ventas</h1>
+  </div>
+
+  <div class="container mx-auto mt-12 ">
+    <div *ngFor="let venta of ventas" class="bg-white shadow-md rounded-lg p-6 mb-6 max-w-2xl mx-auto mt-12 border">
+      <div class="text-gray-500 text-sm mb-4 flex items-center justify-evenly col-flex">
+        <span class="text-base text-gray-700">Vendedor/a: <p class="uppercase font-bold name-responsive">{{
+            venta.vendedor.nombre }}</p>
+        </span>
+        <p class="h-7 w-7 rounded-full flex items-center justify-center"
+          [ngStyle]="{ 'background-color': getColor(venta.vendedor.color) }"> <span
+            class="text-white font-extrabold mx-auto">{{ venta.vendedor.nombre?.charAt(0) || '' }}</span></p>
+        <p class=" text-sm text-gray-700">{{ venta.fecha.toDate() | date: 'dd/MM/yyyy'}}</p>
+      </div>
+
+      <div class="border-t border-gray-200 py-4">
+        <p class="text-gray-700 font-semibold text-lg mb-2 ">Productos</p>
+        <div *ngFor="let producto of venta.productos" class="mb-2">
+          <div class="flex justify-evenly col-flex"><img [src]="producto.imagen"
+              class="w-7 h-7 not-image rounded-full me-2" />
+            <p class="text-gray-900 text-sm">{{ producto.nombre }}</p>
+            <p class="text-gray-600 text-sm">{{ producto.modelo }}</p>
+            <p class="text-gray-600 text-sm">Cantidad: <span class="font-medium text-gray-950">{{ producto.cantidad
+                }}</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-200 py-4">
+        <p class="text-gray-700 font-semibold text-base">
+          Total sin descuento:
+          <span class="text-gray-900">{{ venta.totalSinDescuento | currency }}</span>
+        </p>
+        <p class="text-gray-700 font-semibold text-base">
+          Total con descuento:
+          <span class="text-green-600">{{ venta.totalConDescuento | currency }}</span>
+        </p>
+        <br>
+        <div class="text-end">
+          <button (click)="generatePDF(venta)"><mat-icon
+              class=" cursor-pointer text-blue-500">picture_as_pdf</mat-icon></button>
+          <button matTooltip="Eliminar" mat-icon-button color="warn" (click)="openDeleteDialog(venta)" *ngIf="isAdmin">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p class="text-center text-gray-700" *ngIf="ventas.length === 0">No hay registros disponibles.</p>
+  </div>

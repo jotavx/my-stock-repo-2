@@ -1,0 +1,21 @@
+@use "@angular/material" as mat;
+
+$accent: mat.define-palette(mat.$blue-grey-palette, 100);
+$primary: mat.define-palette(mat.$indigo-palette, A200);
+$warn: mat.define-palette(mat.$red-palette, A700);
+
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+    ),
+  )
+);
+
+@include mat.icon-theme($theme);
+@include mat.button-theme($theme);
+@include mat.card-theme($theme);
+
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700");

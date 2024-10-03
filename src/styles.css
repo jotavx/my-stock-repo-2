@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+}
+
+nav ul li a.active {
+  color: blue; /* Cambia el color del enlace activo */
+  border-bottom: 2px solid blue; /* Añade una línea inferior al enlace activo */
+}
+
+.no-select {
+  pointer-events: none;
+  user-select: none;
+}

@@ -1,0 +1,5 @@
+<app-navbar *ngIf="showNavbar"></app-navbar>
+<button (click)="toggleDarkMode()" *ngIf="showNavbar">
+  <mat-icon class="text-gray-800 dark:text-white ms-3">electric_bolt</mat-icon>
+</button>
+<router-outlet></router-outlet>

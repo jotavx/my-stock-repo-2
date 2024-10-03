@@ -1,0 +1,6 @@
+<div *ngIf="user$ | async as user" class="flex items-center no-select">
+  <div class="h-7 w-7 rounded-full flex items-center justify-center"
+    [ngStyle]="{ 'background-color': getColor(user.color) }">
+    <span class="text-white font-extrabold mx-auto">{{ user.name?.charAt(0) || '' }}</span>
+  </div>
+</div>

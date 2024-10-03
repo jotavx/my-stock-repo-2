@@ -1,0 +1,47 @@
+<br><br><br>
+<div class="container mx-auto mt-5" *ngIf="users$ | async as users">
+  <div class="relative overflow-x-auto">
+    <table class="w-full text-center text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table-auto">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-700  dark:text-gray-400">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            Nombre
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Rol
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Email
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white border-b uppercase" *ngFor="let user of users">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap flex items-center">
+            <div class="h-2 w-2 me-3 rounded-full flex items-center justify-center"
+              [ngStyle]="{ 'background-color': getColor(user.color) }">
+            </div>
+            {{user.name}}
+          </th>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            {{ user.role }}
+          </th>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            {{ user.email }}
+          </td>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap flex justify-center items-center">
+            <button *ngIf="showDeleteButton(user.uid!)" matTooltip="Eliminar usuario" mat-icon-button class="warn"
+              (click)="openDeleteDialog(user.uid!)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <div *ngIf="!showDeleteButton(user.uid!)" style="width: 46px;"></div>
+            <button *ngIf="isAdmin" mat-button (click)="onEditUser(user)"><mat-icon>edit</mat-icon></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

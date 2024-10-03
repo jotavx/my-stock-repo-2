@@ -1,0 +1,84 @@
+<div mat-dialog-title>
+  <h2 class="text-center">{{titulo}}</h2>
+</div> <small *ngIf="submitted && creacionProducto.invalid" class="text-red-600 text-center">Faltan campos obligatorios
+  por
+  completar ( *
+  )</small>
+<br>
+<mat-dialog-content>
+
+
+  <form [formGroup]="creacionProducto">
+    <div class="relative mb-4">
+      <label for="nombre" class="leading-7 text-sm text-gray-600">Marca</label><span class="text-red-600"> *</span>
+      <input type="text" id="nombre" name="nombre"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="nombre">
+    </div>
+
+    <div class="relative mb-4">
+      <label for="modelo" class="leading-7 text-sm text-gray-600">Modelo</label><span class="text-red-600"> *</span>
+      <input type="text" id="modelo" name="modelo"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="modelo">
+    </div>
+
+    <div class="relative mb-4">
+      <label for="categoria" class="leading-7 text-sm text-gray-600">Categoria</label><span class="text-red-600">
+        *</span>
+      <input type="text" id="categoria" name="categoria"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="categoria">
+    </div>
+
+    <div class="relative mb-4">
+      <label for="proveedor" class="leading-7 text-sm text-gray-600">Proveedor</label>
+      <select
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="proveedor">
+        <option value="">Seleccione un proveedor...</option>
+        <option *ngFor="let proveedor of providers" [value]="proveedor.nombre">{{ proveedor.nombre }}</option>
+      </select>
+    </div>
+
+    <div class="relative mb-4">
+      <label for="imagen" class="leading-7 text-sm text-gray-600">Imagen</label>
+      <input type="text" id="imagen" name="imagen"
+        class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg   focus:outline-none border-gray-300 placeholder-gray-300 placeholder-opacity-0 p-3 focus:outline-none"
+        formControlName="imagen">
+    </div>
+
+    <div class="relative mb-4">
+      <label for="cantidad" class="leading-7 text-sm text-gray-600">Cantidad</label><span class="text-red-600"> *</span>
+      <input type="number" id="cantidad" name="cantidad" appNoSymbols
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="cantidad">
+    </div>
+    <div class="relative mb-4">
+      <label for="precio" class="leading-7 text-sm text-gray-600">Precio</label>
+      <input type="number" id="precio" name="precio" appNoSymbols
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="precio">
+    </div>
+    <div class="relative mb-4">
+      <label for="talle" class="leading-7 text-sm text-gray-600">Talle</label>
+      <input type="text" id="talle" name="talle"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="talle">
+    </div>
+    <div class="relative mb-4">
+      <label for="color" class="leading-7 text-sm text-gray-600">Color</label>
+      <input type="text" id="color" name="color"
+        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        formControlName="color">
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <div *ngIf="loading" class="loading me-5">
+    <mat-spinner [diameter]="20"></mat-spinner>
+  </div>
+  <button mat-stroked-button color="warn" mat-dialog-close>Cancelar</button>
+  <button mat-stroked-button color="primary" type="submit" (click)="agregarEditarProducto()">Aplicar</button>
+</mat-dialog-actions>

@@ -1,0 +1,139 @@
+<section class="text-gray-600 body-font">
+  <div class="container px-5 py-24 mx-auto">
+    <!-- Campo de búsqueda y botón -->
+    <button
+      class="text-white end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-600  mb-3"
+      (click)="openDialog()" *ngIf="isAdmin">
+      Crear Producto
+    </button>
+    <div class="flex items-center space-x-2 mb-4">
+      <input type="text" placeholder="Buscar productos..." [formControl]="searchControl"
+        class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-100 dark:placeholder-gray-600 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none" />
+      <!-- <button (click)="filtrarProductos(searchControl.value!)"
+        class="text-white end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800  font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-500 dark:hover:bg-blue-600 ">
+        Buscar
+      </button> -->
+    </div>
+
+
+    <!-- Skeleton Loader -->
+    <div *ngIf="loading" class="flex flex-wrap">
+      <div *ngFor="let _ of skeletonArray" class="flex flex-col m-8 rounded shadow-md w-60 sm:w-80 animate-pulse h-96">
+        <div class="h-48 rounded-t dark:bg-gray-300"></div>
+        <div class="flex-1 px-4 py-8 space-y-4 sm:p-8 dark:bg-gray-50">
+          <div class="w-full h-6 rounded dark:bg-gray-300"></div>
+          <div class="w-full h-6 rounded dark:bg-gray-300"></div>
+          <div class="w-3/4 h-6 rounded dark:bg-gray-300"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Products Display -->
+    <div *ngIf="!loading" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-5">
+      <div *ngFor="let product of filteredProducts" class="max-w-sm rounded overflow-hidden shadow-lg bg-white  mb-3">
+        <img class="w-full h-48 object-cover shadow-xl not-image" [src]="product.imagen" alt="Imagen de producto"
+          width="35px" height="35px">
+        <div class="px-6 py-4">
+          <div class="font-bold text-xl uppercase cursor-pointer flex justify-between"> <span class="mt-2 ">{{
+              product.nombre }}</span>
+            <button mat-icon-button [matMenuTriggerFor]="info"><mat-icon class="text-green-500">info</mat-icon></button>
+          </div>
+          <mat-menu #info="matMenu">
+            <ul class="m-3">
+              <code class="flex items-center text-sm text-gray-900 cursor-pointer me-3 font-medium mb-2 "><span
+                  class="flex w-2.5 h-2.5 bg-blue-600 rounded-full me-1.5 flex-shrink-0"
+                  matTooltip="Categoria"></span>{{product.categoria}}</code>
+              <!-- <code class="flex items-center text-sm  font-medium mb-2 text-gray-900 cursor-pointer me-3 "><span
+                  class="flex w-2.5 h-2.5 bg-purple-500 rounded-full me-1.5 flex-shrink-0"
+                  matTooltip="Precio"></span>${{ product.precio
+                }}</code>
+              <code class="flex items-center text-sm font-medium mb-2 text-gray-900 cursor-pointer me-3 "><span
+                  class="flex w-2.5 h-2.5 bg-indigo-500 rounded-full me-1.5 flex-shrink-0" matTooltip="Talle"></span>{{
+                product.talle
+                }}</code>
+              <code class="flex items-center text-sm  font-medium mb-2  text-gray-900 cursor-pointer me-3 "><span
+                  class="flex w-2.5 h-2.5 bg-teal-500 rounded-full me-1.5 flex-shrink-0" matTooltip="Color"></span>{{
+                product.color
+                }}</code> -->
+              <code class="flex items-center text-sm  font-medium mb-2  text-gray-900 cursor-pointer me-3 "><span
+                  class="flex w-2.5 h-2.5 bg-violet-500 rounded-full me-1.5 flex-shrink-0"
+                  matTooltip="Proveedor"></span>{{ product.proveedor
+                }}</code>
+            </ul>
+          </mat-menu>
+
+          <div class="font-bold text-md mb-2 uppercase cursor-pointer ">{{ product.modelo }}</div>
+
+          <span class="flex items-center me-2">Stock:
+            <span matTooltip="Cantidad"
+              class="flex items-center justify-center h-7 w-7 rounded-full bg-blue-900 text-white text-xs font-bold text-white font-bold uppercase ms-1 cursor-pointer   "
+              [ngClass]="{
+              'bg-red-500 ': product.cantidad === 0,
+              'bg-orange-600 ': product.cantidad > 0 && product.cantidad <= 5
+            }">{{
+              product.cantidad
+              }}</span></span>
+
+
+        </div>
+        <div class="px-6 pt-4 pb-2">
+          <span class="flex items-center text-sm font-medium mb-2 text-gray-900 cursor-pointer me-3 font-bold "><span
+              class="flex w-1 h-1 bg-gray-700 rounded-full me-1.5 flex-shrink-0" matTooltip="Talle"></span>{{
+            product.talle
+            }}</span>
+          <span class="flex items-center text-sm  font-medium mb-2  text-gray-900 cursor-pointer me-3 font-bold "><span
+              class="flex w-1 h-1 bg-gray-700 rounded-full me-1.5 flex-shrink-0" matTooltip="Color"></span>{{
+            product.color
+            }}</span>
+          <span class="flex items-center text-sm mb-2 text-gray-700 cursor-pointer me-3 font-bold "><span
+              class="flex w-1 h-1 bg-gray-700 rounded-full me-1.5 flex-shrink-0" matTooltip="Precio"></span>{{
+            product.precio| currency:'$':'symbol':'1.0'}}
+          </span>
+        </div>
+        <!-- <div class="px-6 pt-4 pb-2 ">
+          <span
+            class="inline-block bg-gradient-to-r from-gray-400 to-gray-950 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2 uppercase cursor-pointer">
+            {{ product.categoria }}
+          </span>
+          <span
+            class="inline-block bg-gradient-to-r from-gray-400 to-gray-950 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2 uppercase cursor-pointer">
+            ${{ product.precio }}
+          </span>
+          <span
+            class="inline-block bg-gradient-to-r from-gray-400 to-gray-950 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2 uppercase cursor-pointer">
+            T:{{ product.talle }}
+          </span>
+          <span
+            class="inline-block bg-gradient-to-r from-gray-400 to-gray-950 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2 uppercase cursor-pointer">
+            C: {{ product.color }}
+          </span>
+          <span
+            class="inline-block bg-gradient-to-r from-gray-400 to-gray-950 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2 uppercase cursor-pointer">
+            P: {{ product.proveedor }}
+          </span>
+        </div> -->
+        <div class="text-end px-6 pb-4">
+          <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isAdmin"><mat-icon>menu</mat-icon></button>
+          <mat-menu #menu="matMenu">
+            <button matTooltip="Agregar stock" mat-icon-button (click)="agregarStock(product)">
+              <mat-icon class="text-green-600">add_circle</mat-icon>
+            </button>
+            <button matTooltip="Restar stock" mat-icon-button (click)="restarStock(product)">
+              <mat-icon class="text-gray-700">remove_circle</mat-icon>
+            </button>
+            <button matTooltip="Editar" mat-icon-button color="primary" (click)="openDialog(product)" *ngIf="isAdmin">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button matTooltip="Eliminar" mat-icon-button color="warn" (click)="openDeleteDialog(product)"
+              *ngIf="isAdmin">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-menu>
+          <button matTooltip="Agregar al carrito" mat-icon-button (click)="moveProductToCart(product)">
+            <mat-icon>add_shopping_cart</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

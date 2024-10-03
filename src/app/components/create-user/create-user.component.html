@@ -1,0 +1,97 @@
+<br><br><br>
+<div class="container mt-5">
+  <form class="max-w-sm mx-auto" [formGroup]="formCreateUser" (ngSubmit)="onSubmit()">
+    <div class="mb-5">
+      <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Nombre</label>
+      <input formControlName="name" type="name" id="name" [class.is-invalid]="nameInvalid"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 outline-none block w-full p-2.5"
+        placeholder="Nombre" required />
+      <small *ngIf="nameInvalid" class="text-red-400">El nombre no debe tener más de 9 caracteres de longitud.</small>
+    </div>
+    <div class="mb-5">
+      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+      <input formControlName="email" type="email" id="email"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 outline-none  block w-full p-2.5"
+        placeholder="email@ejemplo.com" required />
+    </div>
+    <div class="mb-5">
+      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Contraseña</label>
+      <input formControlName="password" type="password" id="password" placeholder="••••••••"
+        [class.is-invalid]="passwordInvalid"
+        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 outline-none block w-full p-2.5 "
+        required />
+      <small *ngIf="passwordInvalid" class="text-red-400">La contraseña debe ser de al menos 6 caracteres de
+        longitud.</small>
+    </div>
+    <div class="flex items-start mb-5">
+      <fieldset>
+        <h6 class="text-gray-600">Tipo de usuario</h6>
+        <div class="flex items-center mb-4">
+          <input id="user-option-1" type="radio" name="role" value="vendedor" formControlName="role"
+            class="w-4 h-4 border-gray-300 focus:outline-none dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+            checked>
+          <label for="user-option-1" class="block ms-2  text-sm font-medium text-gray-900 ">
+            Vendedor
+          </label>
+        </div>
+        <div class="flex items-center mb-4">
+          <input id="user-option-2" type="radio" name="role" value="admin" formControlName="role"
+            class="w-4 h-4 border-gray-300 focus:outline-none  dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600">
+          <label for="user-option-2" class="block ms-2 text-sm font-medium text-gray-900 ">
+            Administrador
+          </label>
+        </div>
+      </fieldset>
+    </div>
+
+    <h6 class="text-gray-600">Color</h6>
+    <div class="flex items-start mb-5">
+      <fieldset class="flex">
+
+        <div class="flex flex-col items-center mb-4 ">
+          <label for="color-1" class="block text-sm font-medium text-gray-900 ">
+            <span
+              class="flex items-center justify-center h-5 w-5 rounded-full bg-blue-900 text-white text-xs font-bold"></span>
+
+          </label>
+          <input id="color-1" type="radio" name="color" value="azul" formControlName="color"
+            class="w-4 h-4 mt-2 border-gray-300  dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:outline-none"
+            checked>
+        </div>
+
+        <div class="flex flex-col items-center mb-4 ms-3">
+          <label for="color-2" class="block text-sm font-medium text-gray-900 ">
+            <span
+              class="flex items-center justify-center h-5 w-5 rounded-full bg-red-900 text-white text-xs font-bold"></span>
+
+          </label>
+          <input id="color-2" type="radio" name="color" value="rojo" formControlName="color"
+            class="w-4 h-4 mt-2 border-gray-300  dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:outline-none">
+        </div>
+
+        <div class="flex flex-col items-center mb-4 ms-3">
+          <label for="color-3" class="block text-sm font-medium text-gray-900 ">
+            <span
+              class="flex items-center justify-center h-5 w-5 rounded-full bg-yellow-300 text-white text-xs font-bold"></span>
+
+          </label>
+          <input id="color-3" type="radio" name="color" value="amarillo" formControlName="color"
+            class="w-4 h-4 mt-2 border-gray-300  dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:outline-none">
+        </div>
+
+        <div class="flex flex-col items-center mb-4 ms-3">
+          <label for="color-4" class="block text-sm font-medium text-gray-900 ">
+            <span
+              class="flex items-center justify-center h-5 w-5 rounded-full bg-green-900 text-white text-xs font-bold"></span>
+
+          </label>
+          <input id="color-4" type="radio" name="color" value="verde" formControlName="color"
+            class="w-4 h-4 mt-2 border-gray-300  dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:outline-none">
+        </div>
+      </fieldset>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" class="btn btn-primary"
+      [disabled]="formCreateUser.invalid">Crear usuario</button>
+  </form>
+</div>

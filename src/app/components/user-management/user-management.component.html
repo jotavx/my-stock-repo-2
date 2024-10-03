@@ -1,0 +1,19 @@
+<div class="container bg-white ">
+  <div class="header">
+    <h1 class="text-gray-950 ">Gestión de usuarios</h1>
+  </div>
+
+  <mat-tab-group>
+    <mat-tab label="Crear Usuario" *ngIf="isAdmin">
+      <app-create-user></app-create-user>
+    </mat-tab>
+
+    <mat-tab label="Lista de Usuarios">
+      <app-user-list></app-user-list>
+    </mat-tab>
+
+    <mat-tab label="Restablecer Contraseña">
+      <app-reset-password></app-reset-password>
+    </mat-tab>
+  </mat-tab-group>
+</div>

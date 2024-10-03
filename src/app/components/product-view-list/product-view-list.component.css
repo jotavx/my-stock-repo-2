@@ -1,0 +1,26 @@
+.product-image {
+  margin: 0 auto !important;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  object-fit: cover;
+}
+
+.container {
+  width: 100%;
+
+  padding: 20px;
+  /* background: #fff; */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+  text-align: center !important;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}

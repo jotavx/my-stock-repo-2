@@ -1,0 +1,74 @@
+<div class="container bg-white ">
+  <div class="header">
+    <h1 class="text-gray-950 ">Stock Bajo</h1>
+  </div>
+</div>
+
+
+<div class="container mx-auto mt-5">
+  <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500  table-auto">
+      <thead class="text-xs text-white uppercase bg-gray-700">
+        <tr>
+          <th scope="col" class="px-6 py-3">
+            Imagen
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Marca
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Modelo
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Color
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Talle
+          </th>
+          <th scope="col" class="px-6 py-3">
+            Cantidad
+          </th>
+          <th scope="col" class="px-6 py-3" *ngIf="isAdmin">
+            Acciones
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="bg-white border-b uppercase" *ngFor="let product of productosBajoStock">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            <img [src]="product.imagen" class="product-image not-image" />
+          </th>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            {{ product.nombre }}
+          </th>
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            {{ product.modelo }}
+          </th>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            {{ product.color }}
+          </td>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            {{ product.talle }}
+          </td>
+          <td class="px-6 py-4 font-bold text-red-900 whitespace-nowrap " [ngClass]="{
+                        'text-red-500 ': product.cantidad === 0,
+                        'text-orange-600 ': product.cantidad > 0 && product.cantidad <= 5
+                      }">
+            {{ product.cantidad }}
+          </td>
+          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+            <button matTooltip="Agregar Stock" mat-icon-button class="warn" (click)="agregarStock(product)"
+              *ngIf="isAdmin">
+              <mat-icon><span class="material-symbols-outlined">
+                  add_circle
+                </span></mat-icon>
+            </button>
+          </td>
+        </tr>
+
+      </tbody>
+      <br>
+      <p *ngIf="productosBajoStock.length === 0" class="text-gray-500 ">No hay productos con stock bajo.
+      </p>
+      <br>
+    </table>

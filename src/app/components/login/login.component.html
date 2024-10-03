@@ -1,0 +1,77 @@
+<!-- <div class="container">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+      <div class="card-body text-center">
+        <div class="mb-md-5 mt-md-4 pb-5">
+          <div class="card bg-dark text-white" style="border-radius: 1rem;">
+            <div class="card-body mt-5 text-center">
+              <h2 class="login-title">INICIA SESION</h2>
+              <form class=" mt-4 form-login" [formGroup]="formLogin" (ngSubmit)="onSubmit()">
+                <mat-form-field class="full-width">
+                  <mat-label>Ingresa usuario</mat-label>
+                  <input matInput formControlName="email" type="email">
+                </mat-form-field>
+                <mat-form-field class="full-width">
+                  <mat-label>Ingresa contraseña</mat-label>
+                  <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" class="w-100"
+                    formControlName="password">
+                  <button mat-icon-button matSuffix (click)=" hide=!hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide" type="button">
+                    <mat-icon style="color: gray;">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+                </mat-form-field>
+                <br>
+                <small *ngIf="loginError" class="text-danger">Usuario o contraseña
+                  incorrectos.</small>
+                <br>
+                <button mat-raised-button color="primary" type="submit" class="btn btn-primary mt-3"
+                  [disabled]="formLogin.invalid">Iniciar
+                  Sesión</button>
+                <br><br>
+                <a mat-stroked-button color="accent" routerLink="/reset-password">¿Olvidaste tu contraseña?</a>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+<br><br><br>
+<div class=" max-w-xs mx-auto">
+  <div class="container rounded bg-white  ">
+    <form class="shadow-md rounded px-8 pt-6 pb-8 mb-4" [formGroup]="formLogin">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2 " for="username">
+          Email
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          formControlName="email" type="email" required>
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2 " for="password">
+          Contraseña
+        </label>
+        <input
+          class="shadow appearance-none  w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+          type="password" id="password" name="password" required placeholder="******************"
+          formControlName="password">
+        <p *ngIf="loginError" class="text-red-500 text-xs ">Usuario o contraseña incorrecto</p>
+      </div>
+      <div align="end">
+        <!-- <a class="inline-block align-baseline text-sm text-blue-500 hover:text-blue-800">
+          Olvidaste tu contraseña?
+        </a> -->
+        <button mat-raised-button color="primary" type="submit" (click)="onSubmit()"
+          class="btn btn-primary mt-3 text-white">Iniciar
+          Sesión</button>
+      </div>
+
+    </form>
+  </div>
+  <br><br>
+  <p class="text-center text-gray-500 text-xs">
+    &copy;2024 App Products.
+  </p>
+</div>

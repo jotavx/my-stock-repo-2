@@ -1,0 +1,46 @@
+<div class="container bg-white ">
+  <div class="header">
+    <h1 class="text-gray-950 ">Proveedores</h1>
+  </div>
+
+  <div class="container mx-auto">
+    <button mat-raised-button color="primary" (click)="openDialog()" *ngIf="isAdmin">
+      Crear Proveedor
+    </button>
+
+    <div class="relative overflow-x-auto mt-5">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500 bg-slate-800 table-auto">
+        <thead class="text-xs text-white uppercase bg-gray-700  ">
+          <tr>
+            <th scope="col" class="px-6 py-3">
+              Nombre
+            </th>
+            <th scope="col" class="px-6 py-3">
+              Contacto
+            </th>
+            <th scope="col" class="px-6 py-3" *ngIf="isAdmin">
+              Acciones
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bg-white border-b uppercase" *ngFor="let provider of providers">
+            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+              {{ provider.nombre }}
+            </td>
+            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+              {{ provider.contacto }}
+            </td>
+            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap " *ngIf="isAdmin">
+              <button matTooltip="Editar" mat-icon-button class="primary" (click)="openDialog(provider)">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button matTooltip="Eliminar Proveedor" mat-icon-button class="warn" (click)="openDeleteDialog(provider)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

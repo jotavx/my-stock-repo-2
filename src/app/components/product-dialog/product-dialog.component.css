@@ -1,0 +1,17 @@
+.product-image {
+  margin: 0 auto !important;
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  object-fit: cover;
+}
+
+th,
+td {
+  text-align: center !important;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}

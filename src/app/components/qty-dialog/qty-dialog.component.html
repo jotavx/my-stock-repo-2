@@ -1,0 +1,13 @@
+<div mat-dialog-content>
+  <span class="block mb-2 text-sm font-medium text-gray-900 ">Ingrese una
+    cantidad</span>
+  <input matInput [(ngModel)]="data.cantidad" type="number" min="1" appNoSymbols cdkFocusInitial
+    (keyup.enter)="onEnter()"
+    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 focus:outline-none" />
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button color="warn" (click)="onCancel()">Cancelar</button>
+  <button mat-button color="primary" [mat-dialog-close]="data.cantidad" cdkFocusInitial>
+    Aceptar
+  </button>
+</div>

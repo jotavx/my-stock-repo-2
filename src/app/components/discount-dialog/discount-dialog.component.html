@@ -1,0 +1,38 @@
+<!-- <h2 mat-dialog-title>Aplicar Descuento</h2>
+<div mat-dialog-content>
+  <form [formGroup]="discountForm">
+    <mat-form-field>
+      <mat-label>Descuento</mat-label>
+      <input matInput type="number" formControlName="discount"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 focus:outline-none" />
+      <mat-error *ngIf="discountForm.controls['discount'].hasError('min')" class="text-red-500">
+        El descuento no puede ser menor que 0
+      </mat-error>
+      <mat-error *ngIf="discountForm.controls['discount'].hasError('max')">
+        El descuento no puede ser mayor al total
+      </mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button color="warn" (click)="closeDialog()">Cancelar</button>
+  <button mat-button color="primary" [disabled]="!discountForm.valid" (click)="applyDiscount()">
+    Aplicar
+  </button>
+</div> -->
+
+<div mat-dialog-content>
+  <span class="block mb-2 text-sm font-medium text-gray-900 ">Ingresar descuento</span>
+  <form [formGroup]="discountForm">
+    <input matInput type="number" min="1" appNoSymbols cdkFocusInitial (keyup.enter)="applyDiscount()"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 focus:outline-none"
+      formControlName="discount" />
+
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button color="warn" (click)="closeDialog()">Cancelar</button>
+  <button mat-button color="primary" cdkFocusInitial [disabled]="!discountForm.valid" (click)="applyDiscount()">
+    Aceptar
+  </button>
+</div>
