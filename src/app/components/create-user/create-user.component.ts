@@ -47,8 +47,9 @@ export class CreateUserComponent {
   onSubmit() {
     const { name, email, password, role, color, ventas } =
       this.formCreateUser.value;
+    const upperCaseName = name.toUpperCase(); // Convertir el nombre a mayúsculas
     this.userService
-      .createUser(name, email, password, role, color, ventas)
+      .createUser(upperCaseName, email, password, role, color, ventas)
       .then(() => {
         this.snackBar.showSuccess('Usuario Registrado');
         this.router.navigate(['/home']);

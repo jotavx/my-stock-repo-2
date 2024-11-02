@@ -17,6 +17,9 @@ export class LowStockComponent implements OnInit {
   cantidadProductosBajoStock: number = 0;
 
   isAdmin: boolean = false;
+  productosPaginados: any[] = [];
+  pageSize = 5;
+  currentPage = 0;
 
   constructor(
     private stockAlertService: StockAlertService,
@@ -32,8 +35,23 @@ export class LowStockComponent implements OnInit {
       .subscribe(({ productos, cantidad }) => {
         this.productosBajoStock = productos;
         this.cantidadProductosBajoStock = cantidad;
+        this.applyPagination();
       });
     this._isUserAdmin();
+  }
+
+  applyPagination() {
+    const startIndex = this.currentPage * this.pageSize;
+    this.productosPaginados = this.productosBajoStock.slice(
+      startIndex,
+      startIndex + this.pageSize
+    );
+  }
+
+  onPageChange(event: any) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.applyPagination();
   }
 
   _isUserAdmin() {
@@ -45,8 +63,8 @@ export class LowStockComponent implements OnInit {
   agregarStock(product: Product): void {
     // Abrir el diálogo para ingresar la cantidad
     const dialogRef = this.dialog.open(QtyDialogComponent, {
-      width: '300px',
-      data: { cantidad: null }, // Inicializamos con una cantidad por defecto
+      width: '450px',
+      data: { cantidad: null, title: 'Agregar Stock' }, // Inicializamos con una cantidad por defecto
     });
 
     // Cuando el diálogo se cierra, obtenemos la cantidad seleccionada

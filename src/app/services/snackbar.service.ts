@@ -1,5 +1,29 @@
+// import { Injectable } from '@angular/core';
+// import { MatSnackBar } from '@angular/material/snack-bar';
+
+// @Injectable({
+//   providedIn: 'root',
+// })
+// export class SnackbarService {
+//   constructor(private snackBar: MatSnackBar) {}
+
+//   showSuccess(mensaje: string) {
+//     this.snackBar.open(mensaje, 'Cerrar', {
+//       duration: 3000,
+//       panelClass: ['snackbar-success'],
+//     });
+//   }
+
+//   showError(mensaje: string) {
+//     this.snackBar.open(mensaje, 'Cerrar', {
+//       duration: 3000,
+//       panelClass: ['snackbar-error'],
+//     });
+//   }
+// }
+
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -7,17 +31,21 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class SnackbarService {
   constructor(private snackBar: MatSnackBar) {}
 
-  showSuccess(mensaje: string) {
+  showSuccess(mensaje: string, config?: MatSnackBarConfig) {
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
-      panelClass: ['snackbar-success'],
+      panelClass: config?.panelClass || 'custom-snackbar-success', // Clase personalizada
+      ...config, // Sobreescribe opciones si es necesario
+      verticalPosition: 'bottom',
     });
   }
 
-  showError(mensaje: string) {
+  showError(mensaje: string, config?: MatSnackBarConfig) {
     this.snackBar.open(mensaje, 'Cerrar', {
       duration: 3000,
-      panelClass: ['snackbar-error'],
+      panelClass: config?.panelClass || 'custom-snackbar-error', // Clase personalizada
+      ...config, // Sobreescribe opciones si es necesario
+      verticalPosition: 'bottom',
     });
   }
 }

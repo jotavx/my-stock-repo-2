@@ -1,127 +1,185 @@
-<div class="container bg-white ">
-  <div class="header">
-    <h1 class="text-gray-950">Carrito</h1>
-  </div>
-</div>
+<div class="animate-slide-in">
+  <div class="p-4 sm:ml-64">
 
-<div class="container mx-auto mt-5">
-  <div class="relative overflow-x-auto  ">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500  table-auto">
-      <thead class="text-xs text-white uppercase bg-gray-700  ">
-        <tr>
-          <th scope="col" class="px-6 py-3">
-            Imagen
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Marca
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Modelo
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Color
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Talle
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Cantidad
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Subtotal
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Acciones
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="bg-white border-b uppercase" *ngFor="let product of cartProducts">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            <img [src]="product.imagen" class="product-image not-image" />
-          </th>
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            {{ product.nombre }}
-          </th>
-          <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap ">
-            {{ product.modelo }}
-          </th>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            {{ product.color }}
-          </td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            {{ product.talle }}
-          </td>
-          <td class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap ">
-            {{ product.cantidad }}
-          </td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            {{ product.subtotal| currency:'$':'symbol':'1.0'}}
-          </td>
-          <!-- <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+    <div class="w-full mx-auto p-5 rounded-lg shadow-md  bg-white mt-1 bg-white ">
+      <div class="w-full flex items-baseline">
+        <div
+          class="me-4 mt-5 text-4xl font-bold leading-none tracking-tight text-gray-700 md:text-4xl lg:text-5xl sm:3xl no-select ">
+          Carrito
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full mx-auto p-5 rounded-lg shadow-md  bg-white mt-1 mx-auto mt-5">
+      <div class="flex mt-5">
+        <div class="relative w-full">
+          <input matInput placeholder="Ingresa o escanea el producto"
+            class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-100 dark:placeholder-gray-600 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500 focus:outline-none"
+            (keyup.enter)="agregarProductoPorCodigo(input.value, input)" #input>
+
+          <!-- Icono de cerrar -->
+          <mat-icon *ngIf="input.value" (click)="clearInput(input)"
+            class="absolute end-4 top-1/2 -translate-y-1/2 cursor-pointer text-gray-300">
+            close
+          </mat-icon>
+        </div>
+        <button mat-icon-button matSuffix (click)="openBarcodeScanner()" matTooltip="Escanear desde cámara">
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#999999">
+            <path
+              d="M48-144v-192h72v120h120v72H48Zm672 0v-72h120v-120h72v192H720ZM168-264v-432h72v432h-72Zm120 0v-432h48v432h-48Zm120 0v-432h72v432h-72Zm120 0v-432h96v432h-96Zm132 0v-432h48v432h-48Zm84 0v-432h48v432h-48ZM48-624v-192h192v72H120v120H48Zm792 0v-120H720v-72h192v192h-72Z" />
+          </svg></button>
+        <!--
+    ESTO ES EL BOTON "ENTER" PARA REALIZAR LA BUSQUEDA
+    <button mat-icon-button matSuffix (click)="agregarProductoPorCodigo(input.value, input)" matTooltip="Agregar">
+      <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#999999">
+        <path
+          d="M784-120 532-372q-30 24-69 38t-83 14q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l252 252-56 56ZM380-400q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z" />
+      </svg></button> -->
+      </div>
+
+
+
+      <div class="relative overflow-x-auto mt-5 shadow-md rounded-lg  ">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500  table-auto">
+          <thead class="text-xs text-white uppercase bg-gray-700  ">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                Imagen
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Marca
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Modelo
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Color
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Talle
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Cantidad
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Subtotal
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="odd:bg-white even:bg-gray-50 even:dark:bg-gray-100 text-gray-900 border-b uppercase"
+              *ngFor="let product of cartProducts">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                <img [src]="product.imagen" class="product-image not-image rounded-full"
+                  onerror="this.onerror=null;this.src='../../../assets/not-image.webp';this.classList.add('not-image');" />
+              </th>
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {{ product.nombre }}
+              </th>
+              <th scope="row" class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap ">
+                {{ product.modelo }}
+              </th>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {{ product.color }}
+              </td>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {{ product.talle }}
+              </td>
+              <td class="px-6 py-4 font-bold text-gray-900 whitespace-nowrap ">
+                {{ product.cantidad }}
+              </td>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {{ product.subtotal| currency:'$':'symbol':'1.0'}}
+              </td>
+              <!-- <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
             ${{ product.precio }}
           </td> -->
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            <button matTooltip="Eliminar del carrito" mat-icon-button class="warn"
-              (click)="eliminarDelCarrito(product)">
-              <mat-icon>remove_shopping_cart</mat-icon>
-            </button>
-          </td>
-        </tr>
-        <tr *ngIf="cartProducts.length > 0">
-          <td colspan="6" class="text-right font-bold">Total:</td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-            <span *ngIf="discount === 0" class="text-green-700 font-bold">{{ getTotal() |
-              currency:'$':'symbol':'1.0' }}</span>
-            <span *ngIf="discount > 0" class="text-gray-900 font-medium"> {{ getTotal() |
-              currency:'$':'symbol':'1.0' }}</span>
-          </td>
-          <div class="mt-2" *ngIf="cartProducts.length > 0">
-            <button
-              class="focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 "
-              (click)="applyDiscount()">Descuento</button>
-          </div>
-          <div class="mt-2" *ngIf="cartProducts.length > 0 && discount > 0">
-            <button class=" focus:outline-none text-white bg-red-700 hover:bg-red-800  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600
-              dark:hover:bg-red-700 " (click)="deleteDiscount()">Deshacer </button>
-          </div>
-        </tr>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                <button matTooltip="Eliminar del carrito" mat-icon-button class="warn"
+                  (click)="eliminarDelCarrito(product)">
+                  <mat-icon>remove_shopping_cart</mat-icon>
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="cartProducts.length > 0">
+              <td colspan="6" class="text-right font-bold text-gray-900">Total:</td>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                <span *ngIf="discount === 0" class="text-green-700 font-bold">{{ getTotal() |
+                  currency:'$':'symbol':'1.0' }}</span>
+                <span *ngIf="discount > 0" class="text-gray-900 font-medium"> {{ getTotal() |
+                  currency:'$':'symbol':'1.0' }}</span>
+              </td>
+              <div class="mt-2" *ngIf="cartProducts.length > 0">
+                <button
+                  class="flex items-center focus:outline-none text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-green-600 dark:hover:bg-green-700 "
+                  (click)="applyDiscount()"><svg xmlns="http://www.w3.org/2000/svg" height="18px"
+                    viewBox="0 -960 960 960" width="18px" class="me-1" fill="#e8eaed">
+                    <path
+                      d="M160-80v-440H80v-240h208q-5-9-6.5-19t-1.5-21q0-50 35-85t85-35q23 0 43 8.5t37 23.5q17-16 37-24t43-8q50 0 85 35t35 85q0 11-2 20.5t-6 19.5h208v240h-80v440H160Zm400-760q-17 0-28.5 11.5T520-800q0 17 11.5 28.5T560-760q17 0 28.5-11.5T600-800q0-17-11.5-28.5T560-840Zm-200 40q0 17 11.5 28.5T400-760q17 0 28.5-11.5T440-800q0-17-11.5-28.5T400-840q-17 0-28.5 11.5T360-800ZM160-680v80h280v-80H160Zm280 520v-360H240v360h200Zm80 0h200v-360H520v360Zm280-440v-80H520v80h280Z" />
+                  </svg>Descuento</button>
+              </div>
+              <div *ngIf="cartProducts.length > 0 && discount > 0">
+                <button
+                  class="flex items-center focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-red-600 dark:hover:bg-red-700  "
+                  (click)="deleteDiscount()"><svg xmlns="http://www.w3.org/2000/svg" height="18px"
+                    viewBox="0 -960 960 960" width="18px" fill="#e8eaed" class="me-1">
+                    <path
+                      d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                  </svg>Deshacer </button>
+              </div>
+            </tr>
 
-        <!-- Descuento aplicado -->
-        <tr *ngIf="cartProducts.length > 0 && discount > 0 ">
-          <td colspan="6" class="text-right font-bold">Descuento aplicado:</td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-red-500">
-            -{{ discount | currency:'$':'symbol':'1.0' }}
-          </td>
-        </tr>
+            <!-- Descuento aplicado -->
+            <tr *ngIf="cartProducts.length > 0 && discount > 0 ">
+              <td colspan="6" class="text-right font-bold">Descuento aplicado:</td>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-red-500">
+                -{{ discount | currency:'$':'symbol':'1.0' }}
+              </td>
+            </tr>
 
-        <!-- Total con descuento -->
-        <tr *ngIf="cartProducts.length > 0 && discount > 0 ">
-          <td colspan="6" class="text-right font-bold">Total con descuento:</td>
-          <td class="px-6 py-4 font-medium text-green-700 whitespace-nowrap">
-            <span class="font-bold">{{ getTotalWithDiscount() | currency:'$':'symbol':'1.0' }}</span>
-          </td>
-        </tr>
-        <tr>
+            <!-- Total con descuento -->
+            <tr *ngIf="cartProducts.length > 0 && discount > 0 ">
+              <td colspan="6" class="text-right font-bold">Total con descuento:</td>
+              <td class="px-6 py-4 font-medium text-green-700 whitespace-nowrap">
+                <span class="font-bold">{{ getTotalWithDiscount() | currency:'$':'symbol':'1.0' }}</span>
+              </td>
+            </tr>
+            <tr>
 
 
 
-        </tr>
-      </tbody>
-      <br>
-      <p *ngIf="cartProducts.length === 0" class="text-gray-500 ">No hay productos en el carrito.</p>
-      <br>
-    </table>
-    <div class="mt-4">
+            </tr>
+          </tbody>
+          <br>
+          <div *ngIf="cartProducts.length === 0" class="text-gray-500 ms-5">No hay productos en el carrito.</div>
+          <br>
+        </table>
+        <div class="mt-4">
 
+        </div>
+      </div>
+      <div class="mt-5 flex justify-end flex-wrap">
+        <button *ngIf="cartProducts.length > 0" class="flex items-center focus:outline-none text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm
+      px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 " (click)="openClearCartDialog()"><svg class="me-2"
+            xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#e8eaed">
+            <path
+              d="M360-640v-80h240v80H360ZM280-80q-33 0-56.5-23.5T200-160q0-33 23.5-56.5T280-240q33 0 56.5 23.5T360-160q0 33-23.5 56.5T280-80Zm400 0q-33 0-56.5-23.5T600-160q0-33 23.5-56.5T680-240q33 0 56.5 23.5T760-160q0 33-23.5 56.5T680-80ZM40-800v-80h131l170 360h280l156-280h91L692-482q-11 20-29.5 31T622-440H324l-44 80h480v80H280q-45 0-68.5-39t-1.5-79l54-98-144-304H40Z" />
+          </svg>Vaciar
+          Carrito</button>
+        <button *ngIf="cartProducts.length > 0" class="flex items-center focus:outline-none text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm
+      px-5 py-2.5  me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 " (click)="openVentaDialog()"><svg
+            xmlns="http://www.w3.org/2000/svg" class="me-2" height="18px" viewBox="0 -960 960 960" width="18px"
+            fill="#e8eaed">
+            <path
+              d="M444-200h70v-50q50-9 86-39t36-89q0-42-24-77t-96-61q-60-20-83-35t-23-41q0-26 18.5-41t53.5-15q32 0 50 15.5t26 38.5l64-26q-11-35-40.5-61T516-710v-50h-70v50q-50 11-78 44t-28 74q0 47 27.5 76t86.5 50q63 23 87.5 41t24.5 47q0 33-23.5 48.5T486-314q-33 0-58.5-20.5T390-396l-66 26q14 48 43.5 77.5T444-252v52Zm36 120q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
+          </svg> Realizar
+          venta</button>
+
+      </div>
     </div>
-  </div>
-  <div class="mt-3" align="end">
-    <button *ngIf="cartProducts.length > 0" mat-raised-button color="warn" (click)="_clearCart()">Vaciar
-      Carrito</button>
-    <button *ngIf="cartProducts.length > 0" mat-raised-button color="primary" (click)="openVentaDialog()"
-      class="ms-5">Realizar
-      venta</button>
 
   </div>
 </div>

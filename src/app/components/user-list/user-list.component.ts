@@ -41,6 +41,10 @@ export class UserListComponent implements OnInit {
       azul: '#0d09fb',
       amarillo: '#edfe06',
       verde: '#04ff00',
+      naranja: '#f97316',
+      purple: '#a855f7',
+      pink: '#ec4899',
+      teal: '#14b8a6',
     };
     return colors[colorName?.toLowerCase() || ''] || '#ccc'; //
   }

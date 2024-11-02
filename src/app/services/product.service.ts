@@ -21,7 +21,7 @@ export class ProductService {
 
   obtenerProductos(): Observable<any> {
     return this.firestore
-      .collection('products', (ref) => ref.orderBy('nombre', 'asc'))
+      .collection('products', (ref) => ref.orderBy('cantidad', 'asc'))
       .snapshotChanges();
   }
 
@@ -63,11 +63,13 @@ export class ProductService {
           const groupedProducts: Record<string, AgrupacionProducto> = {};
 
           productos.forEach((producto) => {
-            const { nombre, cantidad, imagen, categoria } = producto;
+            // Limpiar espacios y convertir a minúsculas
+            const nombreLimpio = producto.nombre.trim().toLowerCase();
+            const { cantidad, imagen, categoria } = producto;
 
-            if (!groupedProducts[nombre]) {
-              groupedProducts[nombre] = {
-                nombre,
+            if (!groupedProducts[nombreLimpio]) {
+              groupedProducts[nombreLimpio] = {
+                nombre: producto.nombre.trim(), // Mantén la capitalización original para mostrar
                 productos: [],
                 totalCantidad: 0,
                 imagen,
@@ -75,8 +77,8 @@ export class ProductService {
               };
             }
 
-            groupedProducts[nombre].productos.push(producto);
-            groupedProducts[nombre].totalCantidad += cantidad;
+            groupedProducts[nombreLimpio].productos.push(producto);
+            groupedProducts[nombreLimpio].totalCantidad += cantidad;
           });
 
           return Object.values(groupedProducts);
@@ -84,6 +86,51 @@ export class ProductService {
         catchError((error: any) => {
           console.error('Error al agrupar productos:', error);
           return [];
+        })
+      );
+  }
+
+  //NEW
+
+  generateSKU(product: Product): string {
+    // Asegúrate de que las propiedades existen antes de acceder a ellas
+    // const idOriginal = product.id.substring(16, 20).toUpperCase(); Valor por defecto
+    const marca = product.nombre
+      ? product.nombre.substring(0, 3).toUpperCase()
+      : 'N/A'; // Valor por defecto
+    const modelo = product.modelo
+      ? product.modelo.substring(0, 3).toUpperCase()
+      : 'N/A'; // Valor por defecto
+    const color = product.color
+      ? product.color.substring(0, 3).toUpperCase()
+      : 'N/A'; // Valor por defecto
+    const talle = product.talle || 'N/A'; // Valor por defecto
+
+    // Combinar para crear el SKU
+    // const sku = `${modelo}-${color}-${talle}-${idOriginal}`;
+    const sku = `${marca}-${modelo}-${talle}-${color}`;
+    return sku;
+  }
+
+  getProductByCode(scannedCode: string): Observable<Product | null> {
+    return this.firestore
+      .collection<Product>('products', (ref) =>
+        ref.where('barcode', '==', scannedCode)
+      )
+      .snapshotChanges()
+      .pipe(
+        map((actions: any[]) => {
+          if (actions.length > 0) {
+            const product = actions[0].payload.doc.data() as Product;
+            product.id = actions[0].payload.doc.id; // Añadir el ID del producto
+            return product;
+          } else {
+            return null; // Producto no encontrado
+          }
+        }),
+        catchError((error: any) => {
+          console.error('Error al obtener el producto por código:', error);
+          return of(null); // Manejo de error
         })
       );
   }

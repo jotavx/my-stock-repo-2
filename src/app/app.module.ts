@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -52,6 +56,11 @@ import { ProductViewListComponent } from './components/product-view-list/product
 import { DiscountDialogComponent } from './components/discount-dialog/discount-dialog.component';
 import { SalesListComponent } from './components/sales-list/sales-list.component';
 import { NoSymbolsDirective } from './directives/no-symbols.directive';
+import { BarcodeScannerComponent } from './components/barcode-scanner/barcode-scanner.component';
+import { SideBarComponent } from './components/side-bar/side-bar.component';
+import { ImportExcelComponent } from './components/import-excel/import-excel.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { DescuentoDialogComponent } from './components/descuento-dialog/descuento-dialog.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +91,11 @@ import { NoSymbolsDirective } from './directives/no-symbols.directive';
     DiscountDialogComponent,
     SalesListComponent,
     NoSymbolsDirective,
+    BarcodeScannerComponent,
+    SideBarComponent,
+    ImportExcelComponent,
+    SettingsComponent,
+    DescuentoDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -105,6 +119,10 @@ import { NoSymbolsDirective } from './directives/no-symbols.directive';
     MatTabsModule,
     MatMenuModule,
     MatCheckboxModule,
+    ZXingScannerModule,
+    MatListModule,
+    MatExpansionModule,
+    MatRadioModule,
   ],
   providers: [
     provideFirebaseApp(() => initializeApp(firebase.firebaseConfig)),

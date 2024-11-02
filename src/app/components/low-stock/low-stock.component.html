@@ -1,74 +1,86 @@
-<div class="container bg-white ">
-  <div class="header">
-    <h1 class="text-gray-950 ">Stock Bajo</h1>
-  </div>
-</div>
+<div class="animate-slide-in">
+  <div class="p-4 sm:ml-64">
+    <div class="w-full mx-auto p-5 rounded-lg shadow-md  bg-white mt-1 bg-white ">
+      <div class="w-full flex items-baseline">
+        <div
+          class="me-4 mt-5 text-4xl font-bold leading-none tracking-tight text-gray-700 md:text-4xl lg:text-5xl sm:3xl no-select ">
+          Stock Bajo
+        </div>
+      </div>
+    </div>
 
 
-<div class="container mx-auto mt-5">
-  <div class="relative overflow-x-auto">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500  table-auto">
-      <thead class="text-xs text-white uppercase bg-gray-700">
-        <tr>
-          <th scope="col" class="px-6 py-3">
-            Imagen
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Marca
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Modelo
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Color
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Talle
-          </th>
-          <th scope="col" class="px-6 py-3">
-            Cantidad
-          </th>
-          <th scope="col" class="px-6 py-3" *ngIf="isAdmin">
-            Acciones
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="bg-white border-b uppercase" *ngFor="let product of productosBajoStock">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            <img [src]="product.imagen" class="product-image not-image" />
-          </th>
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            {{ product.nombre }}
-          </th>
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            {{ product.modelo }}
-          </th>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            {{ product.color }}
-          </td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            {{ product.talle }}
-          </td>
-          <td class="px-6 py-4 font-bold text-red-900 whitespace-nowrap " [ngClass]="{
+    <div class="w-full mx auto p-0 sm:p-5 rounded-lg shadow-md  bg-white mt-1 mt-5">
+      <div class="relative overflow-x-auto shadow-md rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500  table-auto">
+          <thead class="text-xs text-white uppercase bg-gray-700">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                Imagen
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Marca
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Modelo
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Color
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Talle
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Cantidad
+              </th>
+              <th scope="col" class="px-6 py-3" *ngIf="isAdmin">
+                Acciones
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="odd:bg-white even:bg-gray-50 even:dark:bg-gray-100 text-gray-900 border-b  uppercase"
+              *ngFor="let product of productosPaginados">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                <img [src]="product.imagen" class="product-image not-image rounded-full"
+                  onerror="this.onerror=null;this.src='../../../assets/not-image.webp';this.classList.add('not-image');" />
+              </th>
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {{ product.nombre }}
+              </th>
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {{ product.modelo }}
+              </th>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {{ product.color }}
+              </td>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                {{ product.talle }}
+              </td>
+              <td class="px-6 py-4 font-bold text-red-900 whitespace-nowrap " [ngClass]="{
                         'text-red-500 ': product.cantidad === 0,
                         'text-orange-600 ': product.cantidad > 0 && product.cantidad <= 5
                       }">
-            {{ product.cantidad }}
-          </td>
-          <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            <button matTooltip="Agregar Stock" mat-icon-button class="warn" (click)="agregarStock(product)"
-              *ngIf="isAdmin">
-              <mat-icon><span class="material-symbols-outlined">
-                  add_circle
-                </span></mat-icon>
-            </button>
-          </td>
-        </tr>
+                {{ product.cantidad }}
+              </td>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                <button matTooltip="Agregar Stock" mat-icon-button class="warn" (click)="agregarStock(product)"
+                  *ngIf="isAdmin">
+                  <mat-icon><span class="material-symbols-outlined">
+                      add_circle
+                    </span></mat-icon>
+                </button>
+              </td>
+            </tr>
 
-      </tbody>
-      <br>
-      <p *ngIf="productosBajoStock.length === 0" class="text-gray-500 ">No hay productos con stock bajo.
-      </p>
-      <br>
-    </table>
+          </tbody>
+          <br>
+          <div *ngIf="productosBajoStock.length === 0" class="text-gray-500 ms-5 ">No hay productos con stock bajo.
+          </div>
+          <br>
+        </table>
+        <mat-paginator [length]="productosBajoStock.length" [pageSize]="pageSize" (page)="onPageChange($event)"
+          [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      </div>
+
+    </div>

@@ -1,4 +1,3 @@
-<br><br><br>
 <div class="container mt-5">
   <form class="max-w-sm mx-auto" [formGroup]="formCreateUser" (ngSubmit)="onSubmit()">
     <div class="mb-5">
@@ -49,44 +48,45 @@
       <fieldset class="flex">
 
         <div class="flex flex-col items-center mb-4 ">
-          <label for="color-1" class="block text-sm font-medium text-gray-900 ">
-            <span
-              class="flex items-center justify-center h-5 w-5 rounded-full bg-blue-900 text-white text-xs font-bold"></span>
-
-          </label>
           <input id="color-1" type="radio" name="color" value="azul" formControlName="color"
-            class="w-4 h-4 mt-2 border-gray-300  dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:outline-none"
+            class="custom-radio w-6 h-6 bg-blue-500 focus:outline focus:outline-2 focus:outline-blue-500 focus:outline-offset-2 cursor-pointer rounded-md appearance-none border-2 border-transparent transition-colors duration-200"
             checked>
         </div>
 
         <div class="flex flex-col items-center mb-4 ms-3">
-          <label for="color-2" class="block text-sm font-medium text-gray-900 ">
-            <span
-              class="flex items-center justify-center h-5 w-5 rounded-full bg-red-900 text-white text-xs font-bold"></span>
-
-          </label>
           <input id="color-2" type="radio" name="color" value="rojo" formControlName="color"
-            class="w-4 h-4 mt-2 border-gray-300  dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:outline-none">
+            class="custom-radio w-6 h-6 bg-red-500 focus:outline focus:outline-2 focus:outline-red-500 focus:outline-offset-2 cursor-pointer rounded-md appearance-none border-2 border-transparent transition-colors duration-200">
         </div>
 
         <div class="flex flex-col items-center mb-4 ms-3">
-          <label for="color-3" class="block text-sm font-medium text-gray-900 ">
-            <span
-              class="flex items-center justify-center h-5 w-5 rounded-full bg-yellow-300 text-white text-xs font-bold"></span>
-
-          </label>
           <input id="color-3" type="radio" name="color" value="amarillo" formControlName="color"
-            class="w-4 h-4 mt-2 border-gray-300  dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:outline-none">
+            class="custom-radio w-6 h-6 bg-yellow-300 focus:outline focus:outline-2 focus:outline-yellow-300 focus:outline-offset-2 cursor-pointer rounded-md appearance-none border-2 border-transparent transition-colors duration-200">
+        </div>
+        <br>
+
+        <div class="flex flex-col items-center mb-4 ms-3">
+          <input id="color-4" type="radio" name="color" value="verde" formControlName="color"
+            class="custom-radio w-6 h-6 bg-green-500 focus:outline focus:outline-2 focus:outline-green-500 focus:outline-offset-2 cursor-pointer rounded-md appearance-none border-2 border-transparent transition-colors duration-200">
         </div>
 
         <div class="flex flex-col items-center mb-4 ms-3">
-          <label for="color-4" class="block text-sm font-medium text-gray-900 ">
-            <span
-              class="flex items-center justify-center h-5 w-5 rounded-full bg-green-900 text-white text-xs font-bold"></span>
+          <input id="color-4" type="radio" name="color" value="naranja" formControlName="color"
+            class="custom-radio w-6 h-6 bg-orange-500 focus:outline focus:outline-2 focus:outline-orange-500 focus:outline-offset-2 cursor-pointer rounded-md appearance-none border-2 border-transparent transition-colors duration-200">
+        </div>
 
-          </label>
-          <input id="color-4" type="radio" name="color" value="verde" formControlName="color"
-            class="w-4 h-4 mt-2 border-gray-300  dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600 focus:outline-none">
+        <div class="flex flex-col items-center mb-4 ms-3">
+          <input id="color-4" type="radio" name="color" value="purple" formControlName="color"
+            class="custom-radio w-6 h-6 bg-purple-500 focus:outline focus:outline-2 focus:outline-purple-500 focus:outline-offset-2 cursor-pointer rounded-md appearance-none border-2 border-transparent transition-colors duration-200">
+        </div>
+
+        <div class="flex flex-col items-center mb-4 ms-3">
+          <input id="color-4" type="radio" name="color" value="pink" formControlName="color"
+            class="custom-radio w-6 h-6 bg-pink-500 focus:outline focus:outline-2 focus:outline-pink-500 focus:outline-offset-2 cursor-pointer rounded-md appearance-none border-2 border-transparent transition-colors duration-200">
+        </div>
+
+        <div class="flex flex-col items-center mb-4 ms-3">
+          <input id="color-4" type="radio" name="color" value="teal" formControlName="color"
+            class="custom-radio w-6 h-6 bg-teal-500 focus:outline focus:outline-2 focus:outline-teal-500 focus:outline-offset-2 cursor-pointer rounded-md appearance-none border-2 border-transparent transition-colors duration-200">
         </div>
       </fieldset>
     </div>

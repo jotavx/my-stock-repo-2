@@ -9,6 +9,7 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
 import { CartService } from '../../services/cart.service';
 import { QtyDialogComponent } from '../qty-dialog/qty-dialog.component';
 import { UserService } from '../../services/user.service';
+import { BarcodeScannerComponent } from '../barcode-scanner/barcode-scanner.component';
 
 @Component({
   selector: 'app-product-list',
@@ -51,6 +52,27 @@ export class ProductListComponent implements OnInit {
     });
   }
 
+  clearInput(input: HTMLInputElement): void {
+    // Limpiar el valor del campo de entrada y el control de búsqueda
+    input.value = '';
+    this.searchControl.setValue(''); // Restablecer el control de búsqueda
+    this.filtrarProductos(''); // Mostrar todos los productos de nuevo
+  }
+
+  openBarcodeScanner(): void {
+    const dialogRef = this.dialog.open(BarcodeScannerComponent, {
+      width: '600px',
+      height: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (result) {
+        // Set the scanned code into the search input
+        this.searchControl.setValue(result);
+      }
+    });
+  }
+
   obtenerDatos() {
     this.skeletonArray = Array(this.skeletonCount).fill(0);
     setTimeout(() => {
@@ -85,7 +107,9 @@ export class ProductListComponent implements OnInit {
         producto.categoria.toLowerCase().includes(searchTerm.toLowerCase()) ||
         producto.proveedor.toLowerCase().includes(searchTerm.toLowerCase()) ||
         producto.color.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        producto.precio.toString().includes(searchTerm.toLowerCase()) ||
+        producto.precio?.toString().includes(searchTerm.toLowerCase()) ||
+        producto.barcode?.toString().includes(searchTerm.toLowerCase()) ||
+        producto.sku?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         producto.talle.toString().includes(searchTerm.toLowerCase()) ||
         producto.cantidad.toString().includes(searchTerm.toLowerCase())
     );
@@ -132,7 +156,7 @@ export class ProductListComponent implements OnInit {
   moveProductToCart(product: Product) {
     const dialogRef = this.dialog.open(QtyDialogComponent, {
       width: '450px',
-      data: { cantidad: 1 }, // Valor inicial
+      data: { cantidad: 1, title: 'Agregar al Carrito' }, // Valor inicial
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -164,7 +188,7 @@ export class ProductListComponent implements OnInit {
     // Abrir el diálogo para ingresar la cantidad
     const dialogRef = this.dialog.open(QtyDialogComponent, {
       width: '300px',
-      data: { cantidad: 1 }, // Inicializamos con una cantidad por defecto
+      data: { cantidad: null, title: 'Agregar Stock' },
     });
 
     // Cuando el diálogo se cierra, obtenemos la cantidad seleccionada
@@ -196,7 +220,7 @@ export class ProductListComponent implements OnInit {
     // Abrir el diálogo para ingresar la cantidad
     const dialogRef = this.dialog.open(QtyDialogComponent, {
       width: '300px',
-      data: { cantidad: 1 }, // Inicializamos con una cantidad por defecto
+      data: { cantidad: null, title: 'Restar Stock' },
     });
 
     // Cuando el diálogo se cierra, obtenemos la cantidad seleccionada

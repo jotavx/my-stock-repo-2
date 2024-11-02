@@ -9,4 +9,7 @@ export interface Product {
   precio: number;
   talle: number;
   color: string;
+  //NEW
+  sku: string;
+  barcode?: string;
 }

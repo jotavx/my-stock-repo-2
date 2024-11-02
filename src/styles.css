@@ -12,12 +12,68 @@ body {
   font-family: "Inter", "Helvetica Neue", sans-serif;
 }
 
-nav ul li a.active {
-  color: blue; /* Cambia el color del enlace activo */
-  border-bottom: 2px solid blue; /* Añade una línea inferior al enlace activo */
-}
+/* nav ul li a.active {
+  color: blue;
+  border-bottom: 2px solid blue;
+} */
 
 .no-select {
   pointer-events: none;
   user-select: none;
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  font-size: 2rem;
+  color: #16181a;
+}
+
+.not-image {
+  background-image: url("../src/assets/not-image.webp");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.5s ease-out;
+}
+
+.custom-snackbar-success {
+  --mdc-snackbar-container-color: rgb(23, 74, 6);
+  --mat-snack-bar-button-color: rgb(255, 255, 255);
+  --mdc-snackbar-supporting-text-color: white;
+  --mdc-snackbar-supporting-text-weight: 500;
+}
+
+.custom-snackbar-success .custom-snackbar-error .mat-mdc-button {
+  color: white; /* Color del botón */
+}
+
+.custom-snackbar-error {
+  --mdc-snackbar-container-color: rgb(173, 50, 50);
+  --mat-snack-bar-button-color: rgb(255, 255, 255);
+  --mdc-snackbar-supporting-text-color: white;
+  --mdc-snackbar-supporting-text-weight: 500;
 }

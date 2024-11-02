@@ -1,4 +1,10 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
@@ -7,6 +13,8 @@ import { Product } from '../../models/product-model';
 import { CartService } from '../../services/cart.service';
 import { QtyDialogComponent } from '../qty-dialog/qty-dialog.component';
 import { SnackbarService } from '../../services/snackbar.service';
+import { StockAlertService } from '../../services/stock-alert.service';
+import { BarcodeScannerComponent } from '../barcode-scanner/barcode-scanner.component';
 
 @Component({
   selector: 'app-product-dialog',
@@ -14,6 +22,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./product-dialog.component.css'],
 })
 export class ProductDialogComponent implements OnInit {
+  stockThreshold: number = 5; // Valor por defecto
   displayedColumns: string[] = [
     'imagen',
     // 'nombre',
@@ -26,19 +35,35 @@ export class ProductDialogComponent implements OnInit {
     'acciones',
   ];
   dataSource = new MatTableDataSource<Product>(); // Instancia de MatTableDataSource
-
+  marcaProducto: string = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('input') input!: ElementRef;
 
   constructor(
     private cartService: CartService,
     private dialog: MatDialog,
     private snackBar: SnackbarService,
-    @Inject(MAT_DIALOG_DATA) public data: { productos: Product[] }
+    private stockAlertService: StockAlertService,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { productos: Product[]; marca: string }
   ) {}
 
   ngOnInit(): void {
+    this.data.productos.sort((a, b) => a.cantidad - b.cantidad);
     this.dataSource = new MatTableDataSource(this.data.productos);
+    this.setMarcaProducto();
+    this.obtenerUmbralStock();
+  }
+
+  obtenerUmbralStock() {
+    this.stockAlertService.getStockThreshold().subscribe((threshold) => {
+      this.stockThreshold = threshold;
+    });
+  }
+
+  setMarcaProducto() {
+    this.marcaProducto = this.data.marca;
   }
 
   ngAfterViewInit() {
@@ -55,10 +80,31 @@ export class ProductDialogComponent implements OnInit {
     }
   }
 
+  clearInput(input: HTMLInputElement) {
+    input.value = '';
+    this.applyFilter({ target: input } as unknown as Event); // Convierte primero a 'unknown' y luego a 'Event'
+  }
+
+  openBarcodeScanner(): void {
+    const dialogRef = this.dialog.open(BarcodeScannerComponent, {
+      width: '600px',
+      height: '500px',
+      data: {}, // Puedes pasar data si lo necesitas
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.input.nativeElement.value = result; // Inserta el código en el input
+        this.applyFilter({ target: this.input.nativeElement } as Event); // Aplica el filtro
+      }
+    });
+  }
+
   async moveProductToCart(product: Product) {
     const dialogRef = this.dialog.open(QtyDialogComponent, {
       width: '450px',
-      data: { cantidad: 1 }, // Valor inicial
+      data: { cantidad: 1, title: 'Agregar al Carrito' }, // Valor inicial
+      autoFocus: false,
     });
 
     const result = await dialogRef.afterClosed().toPromise();

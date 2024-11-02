@@ -9,15 +9,23 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class QtyDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<QtyDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { cantidad: number }
+    @Inject(MAT_DIALOG_DATA) public data: { cantidad: number; title: string }
   ) {}
+  title: string = '';
+
+  ngOnInit(): void {
+    this.setTitle();
+  }
 
   onCancel(): void {
     this.dialogRef.close();
   }
 
   onEnter(): void {
-    // Cierra el diálogo y envía la cantidad ingresada cuando se presiona Enter
     this.dialogRef.close(this.data.cantidad);
+  }
+
+  setTitle(): void {
+    this.title = this.data.title;
   }
 }

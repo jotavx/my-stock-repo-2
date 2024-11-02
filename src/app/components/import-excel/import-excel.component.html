@@ -1,0 +1,36 @@
+<!-- <div mat-dialog-content>
+  <input type="file" (change)="onFileChange($event)" accept=".xlsx, .xls">
+</div> -->
+<div class="flex items-center justify-center w-full ">
+  <label for="dropzone-file"
+    class="flex flex-col items-center justify-center w-full h-34 p-5 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  ">
+    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+        <g id="Upload 02">
+          <path id="icon"
+            d="M16.296 25.3935L19.9997 21.6667L23.7034 25.3935M19.9997 35V21.759M10.7404 27.3611H9.855C6.253 27.3611 3.33301 24.4411 3.33301 20.8391C3.33301 17.2371 6.253 14.3171 9.855 14.3171V14.3171C10.344 14.3171 10.736 13.9195 10.7816 13.4326C11.2243 8.70174 15.1824 5 19.9997 5C25.1134 5 29.2589 9.1714 29.2589 14.3171H30.1444C33.7463 14.3171 36.6663 17.2371 36.6663 20.8391C36.6663 24.4411 33.7463 27.3611 30.1444 27.3611H29.2589"
+            stroke="#426287" stroke-width="1.6" stroke-linecap="round" />
+        </g>
+      </svg>
+    </div>
+    <input id="dropzone-file" type="file" class="hidden" (change)="onFileChange($event)" accept=".xlsx, .xls" />
+    <p class="text-center font-medium">Importar Excel</p>
+  </label>
+</div>
+
+<!-- <div class="flex items-center justify-center w-full">
+  <label for="dropzone-file"
+    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  ">
+    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+      <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+        fill="none" viewBox="0 0 20 16">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+      </svg>
+      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or
+        drag and drop</p>
+      <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+    </div>
+    <input id="dropzone-file" type="file" class="hidden" />
+  </label>
+</div> -->

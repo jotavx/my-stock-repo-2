@@ -3,11 +3,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+} from '@angular/material/dialog';
 import { SnackbarService } from '../../services/snackbar.service';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Provider } from '../../models/provider';
 import { ProviderService } from '../../services/provider.service';
+import { BarcodeScannerComponent } from '../barcode-scanner/barcode-scanner.component';
 
 @Component({
   selector: 'app-create-product-dialog',
@@ -22,25 +26,29 @@ export class CreateProductDialogComponent implements OnInit {
   titulo: string = 'Crear Producto';
   submitted = false;
 
+  //NEW
+  lastScanResult: string | null = null;
+
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
     private providerService: ProviderService,
     private snackBar: SnackbarService,
     private dialogRef: MatDialogRef<CreateProductDialogComponent>,
-    private storage: AngularFireStorage,
+    private dialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.creacionProducto = this.fb.group({
       nombre: ['', Validators.required],
       modelo: ['', Validators.required],
-      categoria: ['', Validators.required],
+      categoria: [''],
       proveedor: [''],
       imagen: [''],
-      cantidad: [1, [Validators.required, Validators.min(1)]],
+      cantidad: [1, [Validators.required, Validators.min(0)]],
       precio: [0],
       talle: [''],
       color: [''],
+      barcode: [''],
     });
     this.id = data ? data.id : null;
   }
@@ -48,6 +56,34 @@ export class CreateProductDialogComponent implements OnInit {
   ngOnInit(): void {
     this.esEditar();
     this.obtenerProveedores();
+  }
+
+  onEnter(event: Event): void {
+    const keyboardEvent = event as KeyboardEvent;
+    keyboardEvent.preventDefault(); // Previene la acción predeterminada del "Enter"
+    // Tu lógica aquí
+  }
+
+  abrirEscanerCodigoBarras() {
+    const dialogRef = this.dialog.open(BarcodeScannerComponent, {
+      width: '600px',
+      height: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe((resultado) => {
+      if (resultado) {
+        this.creacionProducto.patchValue({ barcode: resultado });
+
+        //NEW
+        this.clearPreviousScanData();
+      }
+    });
+  }
+
+  //NEW
+  clearPreviousScanData() {
+    this.lastScanResult = null; // Borra el resultado anterior
+    console.log('Datos del escaneo anterior eliminados');
   }
 
   agregarEditarProducto() {
@@ -62,6 +98,14 @@ export class CreateProductDialogComponent implements OnInit {
     }
   }
 
+  //NEW
+  // generateProductSKU(product: Product) {
+  //   const sku = this.productService.generateSKU(product);
+  //   console.log('Generated SKU:', sku); // Aquí puedes usar el SKU como lo necesites
+  //   // Por ejemplo, guardarlo en el producto o enviarlo a la base de datos
+  //   product.sku = sku;
+  // }
+
   nuevoProducto() {
     const fechaActual = new Date();
     const producto: any = {
@@ -71,16 +115,24 @@ export class CreateProductDialogComponent implements OnInit {
       proveedor: this.creacionProducto.value.proveedor.toUpperCase(),
       cantidad: this.creacionProducto.value.cantidad,
       precio: this.creacionProducto.value.precio,
-      talle: this.creacionProducto.value.talle.toUpperCase(),
+      talle: this.creacionProducto.value.talle,
       color: this.creacionProducto.value.color.toUpperCase(),
       imagen: this.creacionProducto.value.imagen,
       fechaCreacion: fechaActual,
       fechaActualizacion: fechaActual,
+
+      // Asegúrate de tener el campo sku en el modelo Product
+      sku: '', // Inicialmente vacío, lo vamos a generar
+      barcode: this.creacionProducto.value.barcode,
     };
+
+    // Generar el SKU usando el método del servicio
+    producto.sku = this.productService.generateSKU(producto);
 
     this.loading = true;
     const nombreProducto = this.creacionProducto.value.nombre.toUpperCase();
-    const mensaje = `Producto creado: ${nombreProducto}`;
+    const modeloProducto = this.creacionProducto.value.modelo.toUpperCase();
+    const mensaje = `Producto creado: ${nombreProducto} - ${modeloProducto}`;
     this.crearProducto(producto, mensaje);
   }
 
@@ -108,15 +160,22 @@ export class CreateProductDialogComponent implements OnInit {
       proveedor: this.creacionProducto.value.proveedor.toUpperCase(),
       cantidad: this.creacionProducto.value.cantidad,
       precio: this.creacionProducto.value.precio,
-      talle: this.creacionProducto.value.talle.toUpperCase(),
+      talle: this.creacionProducto.value.talle,
       color: this.creacionProducto.value.color.toUpperCase(),
       imagen: this.creacionProducto.value.imagen,
       fechaActualizacion: fechaActual,
+
+      // Asegúrate de tener el campo sku en el modelo Product
+      sku: '', // Nuevamente vacío, por si hay modificación en los campos
+      barcode: this.creacionProducto.value.barcode,
     };
+    // Generar el SKU usando el método del servicio
+    producto.sku = this.productService.generateSKU(producto);
 
     this.loading = true;
     const nombreProducto = this.creacionProducto.value.nombre.toUpperCase();
-    const mensaje = `Producto modificado: ${nombreProducto}`;
+    const modeloProducto = this.creacionProducto.value.modelo.toUpperCase();
+    const mensaje = `Producto modificado: ${nombreProducto} - ${modeloProducto}`;
 
     this.productService.editarProducto(id, producto).subscribe(
       () => {
@@ -144,6 +203,7 @@ export class CreateProductDialogComponent implements OnInit {
         precio: this.data.precio || '',
         talle: this.data.talle || '',
         color: this.data.color || '',
+        barcode: this.data.barcode || '',
       });
       this.titulo = 'Editar Producto';
     }

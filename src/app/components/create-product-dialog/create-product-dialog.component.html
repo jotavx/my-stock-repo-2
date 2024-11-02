@@ -1,6 +1,6 @@
-<div mat-dialog-title>
-  <h2 class="text-center">{{titulo}}</h2>
-</div> <small *ngIf="submitted && creacionProducto.invalid" class="text-red-600 text-center">Faltan campos obligatorios
+<br><br>
+<h2 class="text-center">{{titulo}}</h2>
+<small *ngIf="submitted && creacionProducto.invalid" class="text-red-600 text-center">Faltan campos obligatorios
   por
   completar ( *
   )</small>
@@ -8,31 +8,40 @@
 <mat-dialog-content>
 
 
-  <form [formGroup]="creacionProducto">
+  <form [formGroup]="creacionProducto" (keydown.enter)="onEnter($event)">
+    <!-- <div class="relative z-0 w-full mb-5 group">
+      <input type="text" name="nombre" id="nombre" formControlName="nombre"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-500 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" " required />
+      <label for="nombre"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombre</label>
+    </div> -->
+
     <div class="relative mb-4">
-      <label for="nombre" class="leading-7 text-sm text-gray-600">Marca</label><span class="text-red-600"> *</span>
+      <label for="nombre" class="leading-7 text-sm  font-medium text-gray-900">Marca</label><span class="text-red-600">
+        *</span>
       <input type="text" id="nombre" name="nombre"
-        class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        class="ng-untouched w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         formControlName="nombre">
     </div>
 
     <div class="relative mb-4">
-      <label for="modelo" class="leading-7 text-sm text-gray-600">Modelo</label><span class="text-red-600"> *</span>
+      <label for="modelo" class="leading-7 text-sm  font-medium text-gray-900">Modelo</label><span class="text-red-600">
+        *</span>
       <input type="text" id="modelo" name="modelo"
         class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         formControlName="modelo">
     </div>
 
     <div class="relative mb-4">
-      <label for="categoria" class="leading-7 text-sm text-gray-600">Categoria</label><span class="text-red-600">
-        *</span>
+      <label for="categoria" class="leading-7 text-sm  font-medium text-gray-900">Categoria</label>
       <input type="text" id="categoria" name="categoria"
         class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         formControlName="categoria">
     </div>
 
     <div class="relative mb-4">
-      <label for="proveedor" class="leading-7 text-sm text-gray-600">Proveedor</label>
+      <label for="proveedor" class="leading-7 text-sm  font-medium text-gray-900">Proveedor</label>
       <select
         class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-3 px-3 leading-8 transition-colors duration-200 ease-in-out"
         formControlName="proveedor">
@@ -42,35 +51,51 @@
     </div>
 
     <div class="relative mb-4">
-      <label for="imagen" class="leading-7 text-sm text-gray-600">Imagen</label>
+      <label for="imagen" class="leading-7 text-sm  font-medium text-gray-900">Imagen</label>
       <input type="text" id="imagen" name="imagen"
         class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg   focus:outline-none border-gray-300 placeholder-gray-300 placeholder-opacity-0 p-3 focus:outline-none"
         formControlName="imagen">
     </div>
 
     <div class="relative mb-4">
-      <label for="cantidad" class="leading-7 text-sm text-gray-600">Cantidad</label><span class="text-red-600"> *</span>
-      <input type="number" id="cantidad" name="cantidad" appNoSymbols
+      <label for="cantidad" class="leading-7 text-sm  font-medium text-gray-900">Cantidad</label><span
+        class="text-red-600"> *</span>
+      <input type="number" id="cantidad" name="cantidad" appNoSymbols min="1"
         class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         formControlName="cantidad">
     </div>
     <div class="relative mb-4">
-      <label for="precio" class="leading-7 text-sm text-gray-600">Precio</label>
+      <label for="precio" class="leading-7 text-sm  font-medium text-gray-900">Precio</label>
       <input type="number" id="precio" name="precio" appNoSymbols
         class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         formControlName="precio">
     </div>
     <div class="relative mb-4">
-      <label for="talle" class="leading-7 text-sm text-gray-600">Talle</label>
+      <label for="talle" class="leading-7 text-sm  font-medium text-gray-900">Talle</label>
       <input type="text" id="talle" name="talle"
         class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         formControlName="talle">
     </div>
     <div class="relative mb-4">
-      <label for="color" class="leading-7 text-sm text-gray-600">Color</label>
+      <label for="color" class="leading-7 text-sm  font-medium text-gray-900">Color</label>
       <input type="text" id="color" name="color"
         class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
         formControlName="color">
+    </div>
+
+    <div class="relative mb-4">
+      <label for="barcode" class="leading-7 text-sm  font-medium text-gray-900">Código de barras</label>
+      <div class="flex">
+        <input formControlName="barcode" placeholder="Escanea o introduce el código de barras"
+          class="block w-11/12 text-sm text-gray-900 border border-gray-300 rounded-lg   focus:outline-none border-gray-300 placeholder-gray-300 placeholder-opacity-0 p-3 focus:outline-none">
+        <button mat-icon-button (click)="abrirEscanerCodigoBarras()" matTooltip="Escanear desde cámara">
+          <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#999999">
+            <path
+              d="M48-144v-192h72v120h120v72H48Zm672 0v-72h120v-120h72v192H720ZM168-264v-432h72v432h-72Zm120 0v-432h48v432h-48Zm120 0v-432h72v432h-72Zm120 0v-432h96v432h-96Zm132 0v-432h48v432h-48Zm84 0v-432h48v432h-48ZM48-624v-192h192v72H120v120H48Zm792 0v-120H720v-72h192v192h-72Z" />
+          </svg></button>
+        <!-- <input type="text" formControlName="barcode" name="barcode" placeholder="Escanea el código de barras"
+          class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg   focus:outline-none border-gray-300 placeholder-gray-300 placeholder-opacity-0 p-3 focus:outline-none" /> -->
+      </div>
     </div>
   </form>
 </mat-dialog-content>

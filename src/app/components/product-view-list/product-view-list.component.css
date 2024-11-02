@@ -6,21 +6,99 @@
   object-fit: cover;
 }
 
-.container {
-  width: 100%;
-
-  padding: 20px;
-  /* background: #fff; */
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.mat-elevation-z8 {
+  overflow-x: auto;
 }
 
 th,
 td {
-  text-align: center !important;
+  white-space: nowrap;
+  border-right: 1px solid #ddd !important;
 }
 
-:host ::ng-deep .mat-sort-header-container {
-  display: flex;
-  justify-content: center;
+td {
+  text-transform: uppercase;
 }
+
+.mat-column-acciones,
+.mat-sort-header-cantidad,
+.mat-column-cantidad,
+.mat-sort-header-talle,
+.mat-column-talle {
+  width: 60px;
+  text-align: center;
+}
+
+.mat-column-precio,
+.mat-column-sku,
+.mat-column-imagen,
+.mat-column-color,
+.mat-column-proveedor,
+.mat-column-select {
+  width: 60px;
+}
+
+.select,
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.select {
+  height: 40px; /* Ajusta la altura según sea necesario */
+}
+
+.icon {
+  font-size: 24px;
+  line-height: 30px; /* Alinea verticalmente el ícono con el select */
+}
+
+[hidden] {
+  display: none;
+}
+
+@media (max-width: 576px) {
+  .hidden {
+    visibility: hidden;
+  }
+}
+
+.div {
+  height: 50px;
+}
+
+/* .mat-sort-header-select,
+.mat-sort-header-acciones,
+.mat-sort-header-imagen,
+.mat-sort-header-color,
+.mat-sort-header-talle,
+.mat-sort-header-cantidad,
+.mat-sort-header-precio,
+.mat-column-select,
+.mat-column-acciones,
+.mat-column-imagen,
+.mat-column-color,
+.mat-column-talle,
+.mat-column-cantidad,
+.mat-column-precio {
+  width: 60px;
+  text-align: center;
+} */
+
+@media (max-width: 600px) {
+  .icon-button svg {
+    width: 16px; /* Tamaño más pequeño del ícono */
+    height: 16px;
+  }
+
+  .icon-button {
+    padding: 4px; /* Reduce el padding de los botones */
+    margin: 2px; /* Reduce el espacio entre botones */
+    min-width: 30px; /* Evita que los botones se expandan mucho */
+  }
+}
+
+/* .padding-custom {
+  padding-top: 28px;
+  padding-bottom: 28px;
+} */

@@ -1,0 +1,84 @@
+zxing-scanner {
+  width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 470px) {
+  zxing-scanner {
+    max-width: 100%;
+  }
+}
+
+header {
+  position: sticky;
+  top: 0;
+  padding: 10px;
+  background: #333;
+  display: flex;
+}
+
+header button {
+  margin-left: 8px;
+}
+
+header mat-form-field {
+  width: 100%;
+  font-weight: bold;
+}
+
+header mat-form-field ::ng-deep .mat-form-field-wrapper {
+  padding: 0;
+}
+
+header mat-form-field ::ng-deep .mat-form-field-flex {
+  padding-top: 0;
+}
+
+header mat-form-field ::ng-deep .mat-form-field-underline {
+  bottom: 0;
+}
+
+header mat-form-field option {
+  padding: 10px;
+  line-height: 2;
+  background: #474747;
+  color: #fff;
+}
+
+.results {
+  position: sticky;
+  bottom: 0;
+  padding: 15px;
+  background: #02c3c3;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.results small {
+  font-weight: bolder;
+  display: block;
+  font-size: 60%;
+  margin: -0.6em 0 0 0;
+}
+
+.results button {
+  background: none;
+  border: none;
+  line-height: 1;
+  font-weight: bolder;
+  font-size: 120%;
+  float: right;
+  color: #fff;
+  margin: -8px -8px -8px 8px;
+}
+
+h2 {
+  padding: 0 16px;
+}
+
+.menu {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}

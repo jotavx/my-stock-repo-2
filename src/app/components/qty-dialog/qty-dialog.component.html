@@ -1,4 +1,6 @@
 <div mat-dialog-content>
+  <div class="text-center text-sm font-medium text-gray-900">{{title}}</div>
+  <br>
   <span class="block mb-2 text-sm font-medium text-gray-900 ">Ingrese una
     cantidad</span>
   <input matInput [(ngModel)]="data.cantidad" type="number" min="1" appNoSymbols cdkFocusInitial

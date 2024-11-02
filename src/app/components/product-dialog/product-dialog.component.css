@@ -9,6 +9,12 @@
 th,
 td {
   text-align: center !important;
+  white-space: nowrap;
+  border-right: 1px solid #ddd !important;
+}
+
+td {
+  text-transform: uppercase;
 }
 
 :host ::ng-deep .mat-sort-header-container {

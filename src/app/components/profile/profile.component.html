@@ -1,6 +1,15 @@
-<div *ngIf="user$ | async as user" class="flex items-center no-select">
+<!-- <div *ngIf="user$ | async as user" class="flex items-center no-select">
   <div class="h-7 w-7 rounded-full flex items-center justify-center"
     [ngStyle]="{ 'background-color': getColor(user.color) }">
     <span class="text-white font-extrabold mx-auto">{{ user.name?.charAt(0) || '' }}</span>
+  </div>
+<div class="font-bold ms-3 text-gray-200"> {{user.name}}</div>
+</div> -->
+
+<div *ngIf="user$ | async as user" class="flex items-center no-select">
+  <div
+    class="inline-flex items-center justify-center w-10 h-10 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-green-600 dark:text-white"
+    [ngStyle]="{ 'background-color': getColor(user.color) }">
+    <span class="text-white text-lg font-extrabold mx-auto">{{ user.name?.charAt(0) || '' }}</span>
   </div>
 </div>

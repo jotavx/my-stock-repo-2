@@ -9,6 +9,10 @@ import { UserService } from '../../services/user.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { BarcodeScannerComponent } from '../barcode-scanner/barcode-scanner.component';
+import { ProductService } from '../../services/product.service';
+import { take } from 'rxjs';
+import { DescuentoDialogComponent } from '../descuento-dialog/descuento-dialog.component';
 
 @Component({
   selector: 'app-cart',
@@ -30,6 +34,7 @@ export class CartComponent {
     public snackBar: SnackbarService,
     private firestore: AngularFirestore,
     private userService: UserService,
+    private productService: ProductService,
     private router: Router
   ) {}
 
@@ -89,7 +94,7 @@ export class CartComponent {
       // Abrir el diálogo para ingresar la cantidad a eliminar
       const dialogRef = this.dialog.open(QtyDialogComponent, {
         width: '450px',
-        data: { cantidad: cartItem.cantidad },
+        data: { cantidad: cartItem.cantidad, title: 'Eliminar del Carrito' },
       });
 
       dialogRef.afterClosed().subscribe((cantidadEliminar) => {
@@ -115,14 +120,20 @@ export class CartComponent {
   }
 
   applyDiscount(): void {
-    const dialogRef = this.dialog.open(DiscountDialogComponent, {
-      width: '350px',
+    const dialogRef = this.dialog.open(DescuentoDialogComponent, {
+      width: '450px',
       data: this.total,
     });
 
-    dialogRef.afterClosed().subscribe((discount: number) => {
-      if (discount !== undefined) {
-        this.discount = discount;
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        const { tipo, valor } = result;
+
+        if (tipo === 'monto') {
+          this.discount = valor <= this.total ? valor : this.total;
+        } else if (tipo === 'porcentaje') {
+          this.discount = this.total * (valor / 100);
+        }
       }
     });
   }
@@ -135,54 +146,107 @@ export class CartComponent {
     return this.total - this.discount;
   }
 
-  // realizarVenta(): void {
-  //   this.userService.getUserProfile().subscribe((user) => {
-  //     if (user && user.uid) {
-  //       const venta = {
-  //         productos: this.cartProducts,
-  //         totalSinDescuento: this.getTotal(),
-  //         totalConDescuento: this.getTotalWithDiscount(),
-  //         vendedor: {
-  //           id: user.uid,
-  //           nombre: user.name,
-  //           color: user.color,
-  //         },
-  //         fecha: new Date(),
-  //       };
+  openBarcodeScanner(): void {
+    const dialogRef = this.dialog.open(BarcodeScannerComponent, {
+      width: '600px',
+      height: '500px',
+    });
 
-  //       this.firestore
-  //         .collection('ventas')
-  //         .add(venta)
-  //         .then(() => {
-  //           this.snackBar.showSuccess('Venta realizada exitosamente.');
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((scannedCode) => {
+        if (scannedCode) {
+          this.productService
+            .getProductByCode(scannedCode)
+            .pipe(take(1))
+            .subscribe(
+              (product) => {
+                if (product?.cantidad === 0) {
+                  this.snackBar.showError(
+                    `No tienes stock suficiente para ${product.nombre} - ${product.modelo}`
+                  );
+                } else if (product) {
+                  console.log('Producto:', product.nombre, product.barcode);
+                  this.cartService
+                    .agregarAlCarrito(product, 1)
+                    .then(() => {
+                      this.snackBar.showSuccess(
+                        `${product.nombre} - ${product.modelo} agregado al carrito`
+                      );
+                      dialogRef.close(); // Asegúrate de cerrar el diálogo después de agregar el producto
+                    })
+                    .catch((error) => {
+                      console.error('Error al agregar al carrito:', error);
+                      this.snackBar.showError(
+                        'Error al agregar el producto al carrito.'
+                      );
+                    });
+                } else {
+                  this.snackBar.showError('Producto no encontrado.');
+                }
+              },
+              (error) => {
+                console.error(
+                  'Error al obtener el producto por código:',
+                  error
+                );
+                this.snackBar.showError('Error al buscar el producto.');
+              }
+            );
+        }
+      });
+  }
 
-  //           // Limpiar el carrito y reiniciar el descuento
-  //           this.cartService
-  //             .clearCart(this.cartProducts)
-  //             .then(() => {
-  //               this.cartProducts = [];
-  //               this.discount = 0; // Reiniciar el descuento aquí
-  //               this.router.navigate(['/sales']);
-  //             })
-  //             .catch((error) => {
-  //               this.snackBar.showError('Error al limpiar el carrito.');
-  //               console.error('Error al limpiar el carrito:', error);
-  //             });
-  //         })
-  //         .catch((error) => {
-  //           this.snackBar.showError('Error al realizar la venta.');
-  //           console.error('Error al guardar la venta:', error);
-  //         });
-  //     } else {
-  //       this.snackBar.showError('No se pudo obtener el usuario.');
-  //     }
-  //   });
-  // }
+  clearInput(input: HTMLInputElement) {
+    input.value = '';
+  }
+
+  agregarProductoPorCodigo(scannedCode: string, input: HTMLInputElement): void {
+    this.productService
+      .getProductByCode(scannedCode)
+      .pipe(take(1))
+      .subscribe(
+        (product) => {
+          if (product?.cantidad === 0) {
+            this.snackBar.showError(
+              `No tienes stock suficiente para ${product.nombre} - ${product.modelo}`
+            );
+            this.clearInput(input);
+          } else if (product) {
+            // console.log('Producto:', product.nombre, product.barcode);
+            this.cartService
+              .agregarAlCarrito(product, 1)
+              .then(() => {
+                this.snackBar.showSuccess(
+                  `${product.nombre} - ${product.modelo} agregado al carrito`
+                );
+                this.clearInput(input);
+              })
+              .catch((error) => {
+                console.error('Error al agregar al carrito:', error);
+                this.snackBar.showError(
+                  'Error al agregar el producto al carrito.'
+                );
+                this.clearInput(input);
+              });
+          } else {
+            this.snackBar.showError('Producto no encontrado.');
+            this.clearInput(input);
+          }
+        },
+        (error) => {
+          console.error('Error al obtener el producto por código:', error);
+          this.snackBar.showError('Error al buscar el producto.');
+        }
+      );
+  }
 
   realizarVenta(): void {
     const venta = {
       productos: this.cartProducts,
       totalSinDescuento: this.getTotal(),
+      descuento: this.getTotal() - this.getTotalWithDiscount(),
       totalConDescuento: this.getTotalWithDiscount(),
 
       vendedor: {

@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Aplicar Descuento</h2>
+
+<div mat-dialog-content>
+  <mat-radio-group [(ngModel)]="tipoDescuento">
+    <mat-radio-button value="monto">Monto Fijo</mat-radio-button>
+    <mat-radio-button value="porcentaje">Porcentaje</mat-radio-button>
+  </mat-radio-group>
+
+  <div class="w-full mt-4">
+    <input matInput type="number" [(ngModel)]="valorDescuento"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 focus:outline-none" />
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button color="warn" (click)="cancelar()">Cancelar</button>
+  <button mat-button color="primary" (click)="confirmar()">Confirmar</button>
+</div>

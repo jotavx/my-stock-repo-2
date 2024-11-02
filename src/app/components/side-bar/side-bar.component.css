@@ -1,0 +1,15 @@
+/* @media (min-width: 576px) {
+  .close-sidebar {
+    visibility: hidden;
+  }
+} */
+
+.active {
+  background-color: #426287;
+}
+
+nav {
+  position: fixed;
+  z-index: 5;
+  width: 100%;
+}

@@ -1,19 +1,28 @@
-<div class="container bg-white ">
-  <div class="header">
-    <h1 class="text-gray-950 ">Gestión de usuarios</h1>
+<div class="animate-slide-in">
+  <div class="p-4 sm:ml-64">
+    <div class="w-full mx-auto p-5 rounded-lg shadow-md  bg-white mt-1 bg-white ">
+      <div class="w-full flex items-baseline">
+        <div
+          class="me-4 mt-5 text-4xl font-bold leading-none tracking-tight text-gray-700 md:text-4xl lg:text-5xl sm:3xl no-select ">
+          Usuarios
+        </div>
+      </div>
+    </div>
+
+    <mat-tab-group class="mt-5">
+      <mat-tab label="Crear Usuario" *ngIf="isAdmin">
+        <app-create-user></app-create-user>
+      </mat-tab>
+
+      <mat-tab label="Lista de Usuarios">
+        <app-user-list></app-user-list>
+
+      </mat-tab>
+
+      <mat-tab label="Restablecer Contraseña">
+        <app-reset-password></app-reset-password>
+      </mat-tab>
+    </mat-tab-group>
+    <br><br><br><br><br>
   </div>
-
-  <mat-tab-group>
-    <mat-tab label="Crear Usuario" *ngIf="isAdmin">
-      <app-create-user></app-create-user>
-    </mat-tab>
-
-    <mat-tab label="Lista de Usuarios">
-      <app-user-list></app-user-list>
-    </mat-tab>
-
-    <mat-tab label="Restablecer Contraseña">
-      <app-reset-password></app-reset-password>
-    </mat-tab>
-  </mat-tab-group>
 </div>

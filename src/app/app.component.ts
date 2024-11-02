@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   showNavbar: boolean = true;
   isDarkMode = false;
-
+  title = 'my-stock';
   constructor(private router: Router) {}
 
   ngOnInit(): void {
